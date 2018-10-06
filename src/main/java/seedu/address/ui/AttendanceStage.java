@@ -2,15 +2,9 @@ package seedu.address.ui;
 
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.print.PageLayout;
-import javafx.print.PageOrientation;
-import javafx.print.Paper;
-import javafx.print.Printer;
-import javafx.print.PrinterJob;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
 import seedu.address.model.person.Person;
 
@@ -77,31 +71,8 @@ public class AttendanceStage extends UiPart<Stage> {
         personTable.setItems(persons);
     }
 
-    /**
-     *
-     * Resize the TableView to fit A4 Size Paper for printing
-     * https://stackoverflow.com/questions/31231021/javafx8-print-api-how-to-set-correctly-the-printable-area
-     */
-
-    public void printResizedTable() {
-        Printer printer = Printer.getDefaultPrinter();
-        PageLayout pageLayout = printer.createPageLayout(
-                Paper.A4, PageOrientation.LANDSCAPE, Printer.MarginType.DEFAULT);
-        PrinterJob job = PrinterJob.createPrinterJob();
-
-        double scaleX = pageLayout.getPrintableWidth() / personTable.getBoundsInParent().getWidth();
-        double scaleY = pageLayout.getPrintableHeight() / personTable.getBoundsInParent().getHeight();
-
-        Scale scale = new Scale(scaleX, scaleY);
-
-        personTable.getTransforms().add(scale);
-
-        if (job != null && job.showPrintDialog(personTable.getScene().getWindow())) {
-            boolean success = job.printPage(pageLayout, personTable);
-            if (success) {
-                job.endJob();
-            }
-        }
-        personTable.getTransforms().remove(scale);
+    public TableView<Person> getPersonTable() {
+        return personTable;
     }
+
 }
