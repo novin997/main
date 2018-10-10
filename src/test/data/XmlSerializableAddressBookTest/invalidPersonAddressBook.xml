@@ -3,8 +3,11 @@
     <!-- Person with invalid email field -->
     <persons>
         <name>Hans Muster</name>
+        <gender isPrivate="false">FEMALE</gender>
+        <nationality isPrivate="false">SG</nationality>
         <phone isPrivate="false">9482424</phone>
         <email isPrivate="false">hans@exam!32ple</email>
         <address isPrivate="false">4th street</address>
+        <grade isPrivate="false">100</grade>
     </persons>
 </addressbook>

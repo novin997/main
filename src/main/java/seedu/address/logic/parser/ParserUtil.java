@@ -1,6 +1,7 @@
 package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.model.person.Gender.inputTransform;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -9,12 +10,16 @@ import java.util.Set;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.email.Message;
+import seedu.address.model.email.Subject;
 import seedu.address.model.group.GroupLocation;
 import seedu.address.model.group.GroupName;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.Gender;
 import seedu.address.model.person.Grade;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.Nationality;
 import seedu.address.model.person.Phone;
 import seedu.address.model.tag.Tag;
 
@@ -52,6 +57,38 @@ public class ParserUtil {
             throw new ParseException(Name.MESSAGE_NAME_CONSTRAINTS);
         }
         return new Name(trimmedName);
+    }
+
+    /**
+     * Parses a {@code String gender} into a {@code Gender}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code gender} is invalid.
+     */
+    public static Gender parseGender(String gender) throws ParseException {
+        requireNonNull(gender);
+        String trimmedGender = gender.trim();
+        if (!Gender.isInputAccepted(trimmedGender)) {
+            throw new ParseException(Gender.MESSAGE_NAME_CONSTRAINTS);
+        }
+        trimmedGender = inputTransform(trimmedGender);
+        requireNonNull(trimmedGender);
+        return new Gender(trimmedGender);
+    }
+
+    /**
+     * Parses a {@code String nationality} into a {@code Nationality}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code nationality} is invalid.
+     */
+    public static Nationality parseNationality(String countryCode) throws ParseException {
+        requireNonNull(countryCode);
+        String trimmedCountryCode = countryCode.trim();
+        if (!Nationality.isValidCountryCode(trimmedCountryCode)) {
+            throw new ParseException(Nationality.MESSAGE_NAME_CONSTRAINTS);
+        }
+        return new Nationality(trimmedCountryCode);
     }
 
     /**
@@ -100,10 +137,10 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code String groupName} into a {@code groupName}.
-     * TODO add description of groupName parser
+     * Parses a {@code String groupName} into a {@code GroupName}.
+     * Leading and trailing whitespaces will be trimmed.
      *
-     * @throws ParseException if the given {@code groupName} is invalid.
+     * @throws ParseException if the given {@code GroupName} is invalid.
      */
     public static GroupName parseGroupName(String groupName) throws ParseException {
         requireNonNull(groupName);
@@ -115,10 +152,10 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code String groupLocation} into a {@code groupLocation}.
-     * // TODO add description of groupLocation parser
+     * Parses a {@code String groupLocation} into a {@code GroupLocation}.
+     * Leading and trailing whitespaces will be trimmed.
      *
-     * @throws ParseException if the given {@code groupLocation} is invalid.
+     * @throws ParseException if the given {@code GroupLocation} is invalid.
      */
     public static GroupLocation parseGroupLocation(String groupLocation) throws ParseException {
         requireNonNull(groupLocation);
@@ -170,4 +207,35 @@ public class ParserUtil {
         }
         return tagSet;
     }
+
+    /**
+     * Parses {@code String subject} into a {@code Subject}
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code subject} is invalid.
+     */
+    public static Subject parseSubject(String subject) throws ParseException {
+        requireNonNull(subject);
+        String trimmedSubject = subject.trim();
+        if (!Subject.isValidSubject(trimmedSubject)) {
+            throw new ParseException(Subject.MESSAGE_SUBJECT_CONSTRAINTS);
+        }
+        return new Subject(trimmedSubject);
+    }
+
+    /**
+     * Parses {@code String message} into a {@code Message}
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code message} is invalid.
+     */
+    public static Message parseMessage(String message) throws ParseException {
+        requireNonNull(message);
+        String trimmedMessage = message.trim();
+        if (!Message.isValidMessage(trimmedMessage)) {
+            throw new ParseException(Message.MESSAGE_MESSAGE_CONSTRAINTS);
+        }
+        return new Message(trimmedMessage);
+    }
+
 }
